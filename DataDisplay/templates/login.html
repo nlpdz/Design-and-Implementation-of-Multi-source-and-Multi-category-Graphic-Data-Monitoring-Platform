@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+	
+	<meta charset="utf-8">
+	<title>用户登录</title>
+    <link href="/static/css/loginstyle_.css" rel="stylesheet" type="text/css">
+	<script type="text/javascript">
+		function register(){
+			//跳转到注册页面
+			window.location.href="busregister"
+		}
+	</script>
+
+
+</head>
+
+<body >
+    <div id = "infobox">
+        <div id = "info">
+            <div class="header">
+                <div class="header_left">
+                    <img src="/static/imgs/loginlogo.png">
+                </div>
+                <div class="header_right">
+                    <img style="width: 70px;margin:10px" src="/static/imgs/lablogo.png">
+                </div>
+
+            </div>
+            <div class="container_login">
+                <div class="container980">
+                    <form id="formid"  method="post">
+{#                        <input type="hidden" name="__VIEWSTATE" id="__VIEWSTATE" value="用户名">#}
+{#                        <input type="hidden" name="__EVENTVALIDATION" id="__EVENTVALIDATION" value="密码">#}
+                        <table width="250" border="0" cellspacing="0" cellpadding="0">
+                        <tbody><tr>
+                            <td width="45" height="42" align="left">
+                                用户名
+                            </td>
+                            <td>
+                                <input name="username" type="text" id="_ctl0_txtusername" onblur="this.style.borderColor='#d1d1d1'" onfocus="this.style.borderColor='#338cce'" style="height: 28px; width: 197px; border-width: 1px; border-style: solid; border-color: rgb(209, 209, 209); padding-left: 5px; line-height: 28px;">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td height="42" align="left">
+                                密 码
+                            </td>
+                            <td>
+                                <input name="password" type="password" id="_ctl0_txtpassword" onblur="this.style.borderColor='#d1d1d1'" onfocus="this.style.borderColor='#338cce'" style="height:28px;width:197px;border-right: #b9b9b9 1px solid;
+                                    border-top: #b9b9b9 1px solid; padding-left: 5px; border-left: #b9b9b9 1px solid;
+                                    line-height: 28px; border-bottom: #b9b9b9 1px solid">
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td height="74">
+                                &nbsp;
+                            </td>
+                            <td>
+                                <input type="submit" value="登录" style="margin: 30px 30px;">
+                                <input type="button" value="注册" style="margin: 30px 30px;"	onclick="register()">
+                            </td>
+                        </tr>
+
+                    </tbody></table>
+
+                    </form>
+                </div>
+            </div>
+            <div class="footer loginfooter">
+                说明：1.使用IE6以上&nbsp;&nbsp;2.1024*768分辨率浏览本系统&nbsp;&nbsp;3.请不要屏蔽弹出窗口&nbsp;&nbsp;4.技术支持：NLP_Connor
+            </div>
+        </div>
+    </div>
+</body>
+</html>

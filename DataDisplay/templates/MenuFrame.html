@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link href="/static/css/MenuFrame.css" type="text/css" rel="stylesheet">
+    <script type="text/javascript" src="/static/js/jquery-3.2.1.min.js"></script>
+    <style>
+        .tree dd .list li a em{width:22px;height:24px;background: url(/static/imgs/lefticon.gif) no-repeat 15px 8px;display:inline;float: left;margin-right:1px;}
+    </style>
+</head>
+<body>
+<form >
+<div class="leftTbg"></div>
+{#树形菜单开始#}
+<div class="tree">
+
+
+    <dl id="tree">
+        <dt class="close">
+           主页
+        </dt>
+        <dd style="display: none">
+            <ul class="list">
+                <li>
+                    <a href="../user" target="PageFrame">
+                        <em></em>用户情况
+                    </a>
+                </li>
+
+            </ul>
+        </dd>
+        <dt class="close">
+           今日头条数据采集
+        </dt>
+        <dd style="display: none">
+            <ul class="list">
+                <li>
+                    <a href="../Headline" target="PageFrame">
+                        <em></em>过程分析
+                    </a>
+                </li>
+
+            </ul>
+        </dd>
+
+
+        <dt class="close">
+           淘宝商品数据采集
+        </dt>
+        <dd style="display: none">
+            <ul class="list">
+                <li>
+                    <a href="../taobao" target="PageFrame">
+                        <em></em>过程分析
+                    </a>
+                </li>
+
+            </ul>
+        </dd>
+        <dt class="close">
+           新浪新闻数据采集
+        </dt>
+        <dd style="display: none">
+            <ul class="list">
+                <li>
+                    <a href="../SinaNews" target="PageFrame">
+                        <em></em>过程分析
+                    </a>
+                </li>
+
+            </ul>
+        </dd>
+        <dt class="close">
+           百度图片数据采集
+        </dt>
+        <dd style="display: none">
+            <ul class="list">
+                <li>
+                    <a href="../BaiduImg" target="PageFrame">
+                        <em></em>过程分析
+                    </a>
+                </li>
+
+            </ul>
+        </dd>
+        <dt class="close">
+           知乎答主数据采集
+        </dt>
+        <dd style="display: none">
+            <ul class="list">
+                <li>
+                    <a href="../zhihu" target="PageFrame">
+                        <em></em>过程分析
+                    </a>
+                </li>
+
+            </ul>
+        </dd>
+        <dt class="close">
+           网易新闻数据采集
+        </dt>
+        <dd style="display: none">
+            <ul class="list">
+                <li>
+                    <a href="../WangyiNews" target="PageFrame">
+                        <em></em>过程分析
+                    </a>
+                </li>
+
+            </ul>
+        </dd>
+        <dt class="close">
+           新浪微博数据采集
+        </dt>
+        <dd style="display: none">
+            <ul class="list">
+                <li>
+                    <a href="../SinaWeibo" target="PageFrame">
+                        <em></em>过程分析
+                    </a>
+                </li>
+
+            </ul>
+        </dd>
+
+
+    </dl>
+</div>
+<script language="javascript">
+        (function () {
+            var tit = $("#tree>dt");
+            tit.each(function () {
+                var me = $(this);
+                var dd = me.next("dd");
+                if (dd.length < 1) {
+                    me.removeClass("close");
+                } else {
+                    me.addClass("close");
+                    me.bind("click", function () {
+                        var index = me.index();
+                        if (dd.is(":hidden")) {
+                            dd.slideDown(100).siblings("dd").slideUp(100);
+                            me.addClass("open").siblings("dt").removeClass("open");
+                        } else {
+                            dd.slideUp(100);
+                            me.removeClass("open");
+                        }
+                    })
+                }
+            })
+        })()
+</script>
+</form>
+
+</body>
+</html>

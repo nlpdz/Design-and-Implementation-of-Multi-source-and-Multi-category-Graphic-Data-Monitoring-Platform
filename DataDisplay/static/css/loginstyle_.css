@@ -1,0 +1,160 @@
+body
+{
+    margin: 0;
+    padding: 0;
+    font: 12px "宋体" , arial,sans-serif;
+    transform: scale(1.2);
+}
+#infobox
+{
+    text-align: center;
+    width: 100%;
+    height: 100%;
+    display: table;
+}
+#info
+{
+    top: 50%;
+    width: 100%;
+    position: absolute;
+    transform: translateY(-50%);
+    display: block;
+    vertical-align: middle;
+}
+
+div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, form, fieldset, input, textarea, blockquote, p
+{
+    padding: 0;
+    margin: 0;
+}
+table, td, tr, th
+{
+    font-size: 12px;
+}
+li
+{
+    list-style-type: none;
+}
+img
+{
+    vertical-align: top;
+    border: 0;
+}
+ol, ul
+{
+    list-style: none;
+}
+input
+{
+    margin: 0;
+    padding: 0;
+}
+input, img
+{
+    line-height: normal;
+}
+em
+{
+    font-style: normal;
+}
+.clear
+{
+    clear: both;
+}
+a
+{
+    color: #ff1013;
+    text-decoration: none;
+}
+a:visited
+{
+    text-decoration: none;
+}
+a:hover
+{
+    color: #ff1013;
+    text-decoration: underline;
+}
+a:active
+{
+    color: #333333;
+}
+.header, .container, .footer
+{
+    width: 980px;
+    margin: 0px auto;
+    clear: both;
+}
+.container_login
+{
+    width: 100%;
+    height: 400px;
+    margin: 0px auto;
+    clear: both;
+    background: url(../imgs/loginback.jpg) no-repeat center top;
+}
+.container980
+{
+    width: 295px;
+    height: 272px;
+    margin: 0px auto;
+    clear: both;
+    padding-top: 128px;
+    padding-left: 685px;
+    color: #3f3f3f;
+}
+.header_left
+{
+    float: left;
+    height: 100px;
+    width: 325px;
+}
+.header_right
+{
+    float: right;
+    height: 100px;
+    width: 265px;
+}
+.signin
+{
+    width: 94px;
+    height: 38px;
+    /*background-image: url(images/signin.png);*/
+    cursor: pointer;
+    border: 0;
+    background-color: transparent;
+}
+.reset
+{
+    width: 94px;
+    height: 38px;
+    /*background-image: url(images/reset.png);*/
+    cursor: pointer;
+    border: 0;
+    background-color: transparent;
+}
+.loginfooter
+{
+    /*background: url(images/logindownbg.png) no-repeat top;*/
+    text-align: center;
+    color: #8d8c8c;
+    height: 60px;
+    line-height: 60px;
+    font-family: Verdana,arial,sans-serif;
+}
+.loginfooter a
+{
+    color: #8d8c8c;
+}
+.loginfooter a:hover
+{
+    color: #ff6600;
+}
+/*高度垂直居中自适应*/
+/*IREFOX+IE7*/
+html, body
+{
+    height: 100%;
+    overflow-y: hidden;
+}
+

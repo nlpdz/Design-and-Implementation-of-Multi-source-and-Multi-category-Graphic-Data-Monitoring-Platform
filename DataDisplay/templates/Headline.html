@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>今日头条</title>
+   <script src="http://cdn.bootcss.com/jquery/1.10.2/jquery.min.js"></script>
+     <script src="http://echarts.baidu.com/dist/echarts.common.min.js"></script>
+    <script src="../static/js/FileSaver.min.js"></script>
+
+
+
+</head>
+
+<body>
+<div style="float: left;">
+<form action="/books/Headline" method="post">
+    <h3>根据关键词抓取今日头条图片新闻。并播放最新抓取的图册信息。</h3>
+    <h3>请输入关键词：</h3>
+   <input type="text" name="keyword"
+    {% if keyword != '' %}
+        value={{ keyword }}
+    {% endif %}
+    >
+   <input type="submit" name="sent" value="提交">
+
+
+</form>
+</div>
+
+<div style="float: left; margin-left: 100px; margin-top: 110px;">
+    <form style="width: 50%; height: 50%;" action="/books/headline_to_stop" method="post">
+   <input type="submit" name="sent" value="停止">
+</form>
+
+</div>
+
+<br><br><br><br><br><br>
+
+<h2 id="time"></h2>
+<div id="content"></div>
+
+   <script type="text/javascript" language="javascript">
+           function update() {
+               $.getJSON("/books/headline_update/",function(data) {
+                   //data为传过来的图片和描述
+                   $('#img img').attr('src',data.imgsrc)
+                   $('#img_note').text(data.imgnote)
+                   $('#img_id').text(data.imgid)
+                   $('#img_title').text(data.imgtitle)
+
+
+                });
+
+               };
+
+           function timeDown(limit) {
+               limit--;
+
+               if (limit < 0) {
+                   limit = 5;
+                   update();
+               }
+               $('#time').text(limit + '秒后刷新');
+               setTimeout(function() {
+                   timeDown(limit);
+               }, 1000)
+           }
+
+           $(document).ready(function() {
+               timeDown(5)
+        })
+
+</script>
+
+<div id="img" align="center" style="text-align: center; width: auto;height: auto;">
+    <img src="" alt="" style="text-align: center; height: 600px;width: 500px;"><br>
+    正在抓取第<h3 id="img_id" style="display: inline;text-align: center"> </h3>个图册<br>
+    图册标题：<h3 id="img_title" style="display: inline;text-align: center"></h3><br>
+    图片描述：<h3 id="img_note" style="display: inline;text-align: center"></h3>
+</div>
+<br><br><br>
+
+</body>
+</html>

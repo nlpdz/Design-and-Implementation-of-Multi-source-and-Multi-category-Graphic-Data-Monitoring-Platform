@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>百度图片</title>
+       <script src="http://cdn.bootcss.com/jquery/1.10.2/jquery.min.js"></script>
+     <script src="http://echarts.baidu.com/dist/echarts.common.min.js"></script>
+    <script src="../static/js/FileSaver.min.js"></script>
+</head>
+<body>
+<div >
+<form action="/books/BaiduImg" method="post">
+    <h3>根据关键词抓取相关百度图片搜索上的图片，并显示抓取进度。</h3>
+    <h3>请输入关键词：</h3>
+   <input type="text" name="searchEvent"
+    {% if searchEvent != '' %}
+        value={{ searchEvent }}
+    {% endif %}
+    >
+   <input type="submit" name="sent" value="提交">
+
+
+</form>
+</div>
+
+
+
+<h2 id="time"></h2>
+<div id="content"></div>
+
+   <script type="text/javascript" language="javascript">
+           function update() {
+               $.getJSON("/books/baidu_loading/",function(data) {
+                   //data为传过来的图片和描述
+                   $('#img img').attr('src',data.imgsrc);
+                   $('#img_name').text(data.imgname);
+                   $('#img_lenght').text(data.lenght);
+                   move();
+
+                function move(){
+                    var id = document.getElementById("c2");  //返回对拥有指定 ID 的第一个对象的引用。
+                    var width = data.lenght;
+                    if (width>=99)
+                        width = 100;
+{#                    var temp = setInterval(go, 100);   //每0.1秒执行一次go函数#}
+                    id.style.width = width+'%';    //使进度条百分比增长
+                    id.innerHTML = width+'%';
+
+
+                }
+
+
+
+                });
+
+
+               };
+
+           function timeDown(limit) {
+               limit--;
+
+               if (limit < 0) {
+                   limit = 3;
+                   update();
+               }
+               $('#time').text(limit + '秒后刷新');
+               setTimeout(function() {
+                   timeDown(limit);
+               }, 1000)
+           }
+
+           $(document).ready(function() {
+               timeDown(3)
+        })
+
+</script>
+
+<div id="img" align="center" style="text-align: center; width: auto;height: auto;">
+    <img src="" alt="" style="text-align: center; height: 600px;width: 500px;"><br>
+
+{#    正在抓取第<h3 id="img_lenght" style="display: inline;text-align: center"> </h3>个图片#}
+
+</div>
+
+
+
+
+<h1>图片采集进度(抓取目标:100张图)</h1>
+    <div id="c1" style=" width: 100%;background-color: darkgray;">
+        <div id="c2" style="width: 0%;background-color:darkcyan;text-align: center;color: white;line-height:30px;">0%</div>
+    </div>
+
+<br><br><br>
+
+
+</body>
+</html>

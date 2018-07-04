@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Sina微博</title>
+       <script src="http://cdn.bootcss.com/jquery/1.10.2/jquery.min.js"></script>
+     <script src="http://echarts.baidu.com/dist/echarts.common.min.js"></script>
+    <script src="../static/js/FileSaver.min.js"></script>
+    <style type="text/css">
+        ul{
+            display: inline-block;
+            list-style: none;
+            margin-left: 15px;
+        }
+    </style>
+</head>
+<body>
+<div style="float: left;">
+<form action="/books/SinaWeibo" method="post">
+    <h3>根据关键词抓取Sina微博上相关博主及其微博</h3>
+    <h3>请输入关键词：</h3>
+   <input type="text" name="searchEvent"
+    {% if searchEvent != '' %}
+        value={{ searchEvent }}
+    {% endif %}
+    >
+   <input type="submit" name="sent" value="提交">
+</form>
+
+<h2 id="time"></h2>
+<div id="content"></div>
+ <div id="chart" style="left: 25%; width: 1000px;height: 800px;"></div> <br><br>
+   <script type="text/javascript" language="javascript">
+       var myChart = echarts.init(document.getElementById('chart'));
+           function update() {
+               $.getJSON("/books/weibo_update/",function(data) {
+
+                   $.each(data.bloggers_nike,function(index,item){
+                       $('.nike').each(function(index_box) {
+                           if(index_box == index){
+                               $(this).text(item)
+                           }
+                       });
+
+                   });
+                   $.each(data.bloggers_home_page,function(index,item){
+                       $('.home_page').each(function(index_box) {
+                           if(index_box == index){
+                               $(this).text(item)
+                           }
+                       });
+
+                   });
+
+                   $.each(data.bloggers_followers_count,function(index,item){
+                       $('.followers_count').each(function(index_box) {
+                           if(index_box == index){
+                               $(this).text(item)
+                           }
+                       });
+
+                   });
+
+                   $.each(data.liked_num_top10_url,function(index,item){
+                       $('.top10_url').each(function(index_box) {
+                           if(index_box == index){
+                               $(this).text(item)
+                           }
+                       });
+
+                   });
+                   $.each(data.liked_num_top10_count,function(index,item){
+                       $('.top10_count').each(function(index_box) {
+                           if(index_box == index){
+                               $(this).text(item)
+                           }
+                       });
+
+                   });
+
+
+{#                   $('#weibo_num').text(data.weibo_num);#}
+{#                   $('#liked_num').text(data.liked_num);#}
+{#                   $('#comment_num').text(data.comment_num);#}
+{#                   $('#shared_num').text(data.shared_num);#}
+
+
+
+option = {
+    color: ['#3398DB'],
+    tooltip : {
+        trigger: 'axis',
+        axisPointer : {            // 坐标轴指示器，坐标轴触发有效
+            type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+        }
+    },
+    grid: {
+        left: '3%',
+        right: '4%',
+        bottom: '3%',
+        containLabel: true
+    },
+    xAxis : [
+        {
+            type : 'category',
+            data : ['微博总数', '总点赞数(万)', '总评论数(万)', '总分享数(万)'],
+            axisTick: {
+                alignWithLabel: true
+            }
+        }
+    ],
+    yAxis : [
+        {
+            type : 'value'
+        }
+    ],
+    series : [
+        {
+
+            type:'bar',
+            barWidth: '60%',
+            data:[data.weibo_num, data.liked_num/10000, data.comment_num/10000, data.shared_num/10000]
+        }
+    ]
+};myChart.setOption(option);
+
+
+
+
+
+                });
+
+               };
+
+           function timeDown(limit) {
+               limit--;
+
+               if (limit < 0) {
+                   limit = 5;
+                   update();
+               }
+               $('#time').text(limit + '秒后刷新');
+               setTimeout(function() {
+                   timeDown(limit);
+               }, 1000)
+           }
+
+           $(document).ready(function() {
+               timeDown(5)
+        })
+
+</script>
+
+<div id="data" align="center" style="text-align: center; width: 2000px;height: auto;">
+
+
+    <h3 id="bloggers_nike" style="display: inline;text-align: center;"> 相关博主名称，主页，粉丝数:</h3><br>
+
+    <ul class="nike"></ul><ul class="home_page"></ul><ul class="followers_count"></ul><br>
+    <ul class="nike"></ul><ul class="home_page"></ul><ul class="followers_count"></ul><br>
+    <ul class="nike"></ul><ul class="home_page"></ul><ul class="followers_count"></ul><br>
+    <ul class="nike"></ul><ul class="home_page"></ul><ul class="followers_count"></ul><br>
+    <ul class="nike"></ul><ul class="home_page"></ul><ul class="followers_count"></ul><br>
+    <ul class="nike"></ul><ul class="home_page"></ul><ul class="followers_count"></ul><br>
+    <ul class="nike"></ul><ul class="home_page"></ul><ul class="followers_count"></ul><br>
+    <ul class="nike"></ul><ul class="home_page"></ul><ul class="followers_count"></ul><br>
+    <ul class="nike"></ul><ul class="home_page"></ul><ul class="followers_count"></ul><br>
+    <ul class="nike"></ul><ul class="home_page"></ul><ul class="followers_count"></ul><br>
+
+
+{#    相关博主微博总数:<h3 id="weibo_num" style="display: inline;text-align: center"> </h3><br>#}
+{#    相关博主微博总点赞数：<h3 id="liked_num" style="display: inline;text-align: center"></h3><br>#}
+{#    相关博主微博总评论数：<h3 id="comment_num" style="display: inline;text-align: center"></h3><br>#}
+{#    相关博主微博总分享数：<h3 id="shared_num" style="display: inline;text-align: center"></h3><br><br><br>#}
+
+    <h3 id="liked_num_top10_url" style="display: inline;text-align: center">相关博主单条微博点赞top10链接，及对应点赞数：</h3><br>
+    <ul class="top10_url"></ul><ul class="top10_count"></ul><br>
+    <ul class="top10_url"></ul><ul class="top10_count"></ul><br>
+    <ul class="top10_url"></ul><ul class="top10_count"></ul><br>
+    <ul class="top10_url"></ul><ul class="top10_count"></ul><br>
+    <ul class="top10_url"></ul><ul class="top10_count"></ul><br>
+    <ul class="top10_url"></ul><ul class="top10_count"></ul><br>
+    <ul class="top10_url"></ul><ul class="top10_count"></ul><br>
+    <ul class="top10_url"></ul><ul class="top10_count"></ul><br>
+    <ul class="top10_url"></ul><ul class="top10_count"></ul><br>
+    <ul class="top10_url"></ul><ul class="top10_count"></ul><br>
+</div>
+
+
+<br><br><br>
+
+
+</div>
+</body>
+</html>

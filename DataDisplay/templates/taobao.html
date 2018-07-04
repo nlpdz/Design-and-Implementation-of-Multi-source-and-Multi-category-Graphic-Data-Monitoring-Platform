@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>淘宝商品信息</title>
+   <script src="http://cdn.bootcss.com/jquery/1.10.2/jquery.min.js"></script>
+{#     <script src="http://echarts.baidu.com/dist/echarts.common.min.js"></script>#}
+    <script src="../static/js/FileSaver.min.js"></script>
+
+<script src="http://cdn.bootcss.com/echarts/3.2.2/echarts.min.js"></script>
+<script src="http://echarts.baidu.com/asset/map/js/china.js"></script>
+
+
+
+</head>
+
+<body>
+<div style="float: left;">
+<form action="/books/taobao" method="post">
+    <h3>根据关键词抓取商品信息。并对商品分布地区进行分析。</h3>
+    <h3>请输入关键词：</h3>
+   <input type="text" name="keyword"
+    {% if keyword != '' %}
+        value={{ keyword }}
+    {% endif %}
+    >
+   <input type="submit" name="sent" value="提交">
+
+
+</form>
+</div>
+
+<div style="float: left; margin-left: 100px; margin-top: 110px;">
+    <form style="width: 50%; height: 50%;" action="/books/TB_to_stop" method="post">
+   <input type="submit" name="sent" value="停止">
+</form>
+
+</div>
+
+<br><br><br><br><br><br>
+
+<h2 id="time"></h2>
+<div id="content"></div>
+ <div id="chart" style="left: 10%; width: 1200px;height: 920px;"></div>
+   <script type="text/javascript" language="javascript">
+
+
+       var myChart = echarts.init(document.getElementById('chart'));
+
+           function update() {
+               $.getJSON("/books/TaoBao_update/",function(data) {
+                var beijing = data.beijing;
+                var tianjin = data.tianjin;
+                var hebei = data.hebei;
+                var shanxi = data.shanxi;
+                var neimenggu = data.neimenggu;
+                var liaoning = data.liaoning;
+                var jilin = data.jilin;
+                var heilongjiang = data.heilongjiang;
+                var shanghai = data.shanghai;
+                var jiangsu = data.jiangsu;
+                var zhejiang = data.zhejiang;
+                var anhui = data.anhui;
+                var fujian = data.fujian;
+                var jiangxi = data.jiangxi;
+                var shandong = data.shandong;
+                var henan = data.henan;
+                var hubei = data.hubei;
+                var hunan = data.hunan;
+                var chongqin = data.chongqin;
+                var sichuan = data.sichuan;
+                var guizhou = data.guizhou;
+                var yunnan = data.yunnan;
+                var xizang = data.xizang;
+                var sanxi = data.sanxi;
+                var gansu = data.gansu;
+                var qinghai = data.qinghai;
+                var ningxia = data.ningxia;
+                var xinjiang = data.xinjiang;
+                var guangdong = data.guangdong;
+                var guangxi = data.guangxi;
+                var hainan = data.hainan;
+
+                console.log(data)
+
+var name_title = "该类商品各省市商家数，交易数与商品均价分布"
+var nameColor = " rgb(55, 75, 113)"
+var name_fontFamily = '等线'
+var subname_fontSize = 15
+var name_fontSize = 18
+var mapName = 'china'
+var data = [
+    {name:"北京",value:beijing[0]},
+    {name:"天津",value:tianjin[0]},
+    {name:"河北",value:hebei[0]},
+    {name:"山西",value:shanxi[0]},
+    {name:"内蒙古",value:neimenggu[0]},
+    {name:"辽宁",value:liaoning[0]},
+    {name:"吉林",value:jilin[0]},
+    {name:"黑龙江",value:heilongjiang[0]},
+    {name:"上海",value:shanghai[0]},
+    {name:"江苏",value:jiangsu[0]},
+    {name:"浙江",value:zhejiang[0]},
+    {name:"安徽",value:anhui[0]},
+    {name:"福建",value:fujian[0]},
+    {name:"江西",value:jiangxi[0]},
+    {name:"山东",value:shandong[0]},
+    {name:"河南",value:henan[0]},
+    {name:"湖北",value:hubei[0]},
+    {name:"湖南",value:hunan[0]},
+    {name:"重庆",value:chongqin[0]},
+    {name:"四川",value:sichuan[0]},
+    {name:"贵州",value:guizhou[0]},
+    {name:"云南",value:yunnan[0]},
+    {name:"西藏",value:xizang[0]},
+    {name:"陕西",value:sanxi[0]},
+    {name:"甘肃",value:gansu[0]},
+    {name:"青海",value:qinghai[0]},
+    {name:"宁夏",value:ningxia[0]},
+    {name:"新疆",value:xinjiang[0]},
+    {name:"广东",value:guangdong[0]},
+    {name:"广西",value:guangxi[0]},
+    {name:"海南",value:hainan[0]},
+    ];
+
+var geoCoordMap = {};
+var toolTipData = [
+    {name:"北京",value:[{name:"商家数",value:beijing[0]},{name:"交易数",value:beijing[1]},{name:"商品均价",value:beijing[2]}]},
+    {name:"天津",value:[{name:"商家数",value:tianjin[0]},{name:"交易数",value:tianjin[1]},{name:"商品均价",value:tianjin[2]}]},
+    {name:"河北",value:[{name:"商家数",value:hebei[0]},{name:"交易数",value:hebei[1]},{name:"商品均价",value:hebei[2]}]},
+    {name:"山西",value:[{name:"商家数",value:shanxi[0]},{name:"交易数",value:shanxi[1]},{name:"商品均价",value:shanxi[2]}]},
+    {name:"内蒙古",value:[{name:"商家数",value:neimenggu[0]},{name:"交易数",value:neimenggu[1]},{name:"商品均价",value:neimenggu[2]}]},
+    {name:"辽宁",value:[{name:"商家数",value:liaoning[0]},{name:"交易数",value:liaoning[1]},{name:"商品均价",value:liaoning[2]}]},
+    {name:"吉林",value:[{name:"商家数",value:jilin[0]},{name:"交易数",value:jilin[1]},{name:"商品均价",value:jilin[2]}]},
+    {name:"黑龙江",value:[{name:"商家数",value:heilongjiang[0]},{name:"交易数",value:heilongjiang[1]},{name:"商品均价",value:heilongjiang[2]}]},
+    {name:"上海",value:[{name:"商家数",value:shanghai[0]},{name:"交易数",value:shanghai[1]},{name:"商品均价",value:shanghai[2]}]},
+    {name:"江苏",value:[{name:"商家数",value:jiangsu[0]},{name:"交易数",value:jiangsu[1]},{name:"商品均价",value:jiangsu[2]}]},
+    {name:"浙江",value:[{name:"商家数",value:zhejiang[0]},{name:"交易数",value:zhejiang[1]},{name:"商品均价",value:zhejiang[2]}]},
+    {name:"安徽",value:[{name:"商家数",value:anhui[0]},{name:"交易数",value:anhui[1]},{name:"商品均价",value:anhui[2]}]},
+    {name:"福建",value:[{name:"商家数",value:fujian[0]},{name:"交易数",value:fujian[1]},{name:"商品均价",value:fujian[2]}]},
+    {name:"江西",value:[{name:"商家数",value:jiangxi[0]},{name:"交易数",value:jiangxi[1]},{name:"商品均价",value:jiangxi[2]}]},
+    {name:"山东",value:[{name:"商家数",value:shandong[0]},{name:"交易数",value:shandong[1]},{name:"商品均价",value:shandong[2]}]},
+    {name:"河南",value:[{name:"商家数",value:henan[0]},{name:"交易数",value:henan[1]},{name:"商品均价",value:henan[2]}]},
+    {name:"湖北",value:[{name:"商家数",value:hubei[0]},{name:"交易数",value:hubei[1]},{name:"商品均价",value:hubei[2]}]},
+    {name:"湖南",value:[{name:"商家数",value:hunan[0]},{name:"交易数",value:hunan[1]},{name:"商品均价",value:hunan[2]}]},
+    {name:"重庆",value:[{name:"商家数",value:chongqin[0]},{name:"交易数",value:chongqin[1]},{name:"商品均价",value:chongqin[2]}]},
+    {name:"四川",value:[{name:"商家数",value:sichuan[0]},{name:"交易数",value:sichuan[1]},{name:"商品均价",value:sichuan[2]}]},
+    {name:"贵州",value:[{name:"商家数",value:guizhou[0]},{name:"交易数",value:guizhou[1]},{name:"商品均价",value:guizhou[2]}]},
+    {name:"云南",value:[{name:"商家数",value:yunnan[0]},{name:"交易数",value:yunnan[1]},{name:"商品均价",value:yunnan[2]}]},
+    {name:"西藏",value:[{name:"商家数",value:xizang[0]},{name:"交易数",value:xizang[1]},{name:"商品均价",value:xizang[2]}]},
+    {name:"陕西",value:[{name:"商家数",value:sanxi[0]},{name:"交易数",value:sanxi[1]},{name:"商品均价",value:sanxi[2]}]},
+    {name:"甘肃",value:[{name:"商家数",value:gansu[0]},{name:"交易数",value:gansu[1]},{name:"商品均价",value:gansu[2]}]},
+    {name:"青海",value:[{name:"商家数",value:qinghai[0]},{name:"交易数",value:qinghai[1]},{name:"商品均价",value:qinghai[2]}]},
+    {name:"宁夏",value:[{name:"商家数",value:ningxia[0]},{name:"交易数",value:ningxia[1]},{name:"商品均价",value:ningxia[2]}]},
+    {name:"新疆",value:[{name:"商家数",value:xinjiang[0]},{name:"交易数",value:xinjiang[1]},{name:"商品均价",value:xinjiang[2]}]},
+    {name:"广东",value:[{name:"商家数",value:guangdong[0]},{name:"交易数",value:guangdong[1]},{name:"商品均价",value:guangdong[2]}]},
+    {name:"广西",value:[{name:"商家数",value:guangxi[0]},{name:"交易数",value:guangxi[1]},{name:"商品均价",value:guangxi[2]}]},
+    {name:"海南",value:[{name:"商家数",value:hainan[0]},{name:"交易数",value:hainan[1]},{name:"商品均价",value:hainan[2]}]},
+];
+
+/*获取地图数据*/
+myChart.showLoading();
+var mapFeatures = echarts.getMap(mapName).geoJson.features;
+myChart.hideLoading();
+mapFeatures.forEach(function(v) {
+    // 地区名称
+    var name = v.properties.name;
+    // 地区经纬度
+    geoCoordMap[name] = v.properties.cp;
+
+});
+
+// console.log("============geoCoordMap===================")
+// console.log(geoCoordMap)
+// console.log("================data======================")
+console.log(data)
+console.log(toolTipData)
+var max = 480,
+    min = 9; // todo
+var maxSize4Pin = 100,
+    minSize4Pin = 20;
+
+var convertData = function(data) {
+    var res = [];
+    for (var i = 0; i < data.length; i++) {
+        var geoCoord = geoCoordMap[data[i].name];
+        if (geoCoord) {
+            res.push({
+                name: data[i].name,
+                value: geoCoord.concat(data[i].value),
+            });
+        }
+    }
+    return res;
+};
+option = {
+    title: {
+        text: name_title,
+
+        x: 'center',
+        textStyle: {
+            color: nameColor,
+            fontFamily: name_fontFamily,
+            fontSize: name_fontSize
+        },
+        subtextStyle:{
+            fontSize:subname_fontSize,
+            fontFamily:name_fontFamily
+        }
+    },
+    tooltip: {
+        trigger: 'item',
+        formatter: function(params) {
+            if (typeof(params.value)[2] == "undefined") {
+                var toolTiphtml = ''
+                for(var i = 0;i<toolTipData.length;i++){
+                    if(params.name==toolTipData[i].name){
+                        toolTiphtml += toolTipData[i].name+':<br>'
+                        for(var j = 0;j<toolTipData[i].value.length;j++){
+                            toolTiphtml+=toolTipData[i].value[j].name+':'+toolTipData[i].value[j].value+"<br>"
+                        }
+                    }
+                }
+                console.log(toolTiphtml)
+                // console.log(convertData(data))
+                return toolTiphtml;
+            } else {
+                var toolTiphtml = ''
+                for(var i = 0;i<toolTipData.length;i++){
+                    if(params.name==toolTipData[i].name){
+                        toolTiphtml += toolTipData[i].name+':<br>'
+                        for(var j = 0;j<toolTipData[i].value.length;j++){
+                            toolTiphtml+=toolTipData[i].value[j].name+':'+toolTipData[i].value[j].value+"<br>"
+                        }
+                    }
+                }
+                console.log(toolTiphtml)
+                // console.log(convertData(data))
+                return toolTiphtml;
+            }
+        }
+    },
+    // legend: {
+    //     orient: 'vertical',
+    //     y: 'bottom',
+    //     x: 'right',
+    //     data: ['credit_pm2.5'],
+    //     textStyle: {
+    //         color: '#fff'
+    //     }
+    // },
+    visualMap: {
+        show: true,
+        min: 0,
+        max: 200,
+        left: 'left',
+        top: 'bottom',
+        text: ['高', '低'], // 文本，默认为数值文本
+        calculable: true,
+        seriesIndex: [1],
+        inRange: {
+            // color: ['#3B5077', '#031525'] // 蓝黑
+            // color: ['#ffc0cb', '#800080'] // 红紫
+            // color: ['#3C3B3F', '#605C3C'] // 黑绿
+            // color: ['#0f0c29', '#302b63', '#24243e'] // 黑紫黑
+            // color: ['#23074d', '#cc5333'] // 紫红
+            color: ['#00467F', '#A5CC82'] // 蓝绿
+            // color: ['#1488CC', '#2B32B2'] // 浅蓝
+            // color: ['#00467F', '#A5CC82'] // 蓝绿
+            // color: ['#00467F', '#A5CC82'] // 蓝绿
+            // color: ['#00467F', '#A5CC82'] // 蓝绿
+            // color: ['#00467F', '#A5CC82'] // 蓝绿
+
+        }
+    },
+    /*工具按钮组*/
+    // toolbox: {
+    //     show: true,
+    //     orient: 'vertical',
+    //     left: 'right',
+    //     top: 'center',
+    //     feature: {
+    //         dataView: {
+    //             readOnly: false
+    //         },
+    //         restore: {},
+    //         saveAsImage: {}
+    //     }
+    // },
+    geo: {
+        show: true,
+        map: mapName,
+        label: {
+            normal: {
+                show: false
+            },
+            emphasis: {
+                show: false,
+            }
+        },
+        roam: true,
+        itemStyle: {
+            normal: {
+                areaColor: '#031525',
+                borderColor: '#3B5077',
+            },
+            emphasis: {
+                areaColor: '#2B91B7',
+            }
+        }
+    },
+    series: [{
+            name: '散点',
+            type: 'scatter',
+            coordinateSystem: 'geo',
+            data: convertData(data),
+            symbolSize: function(val) {
+                return val[2] / 10;
+            },
+            label: {
+                normal: {
+                    formatter: '{b}',
+                    position: 'right',
+                    show: true
+                },
+                emphasis: {
+                    show: true
+                }
+            },
+            itemStyle: {
+                normal: {
+                    color: '#05C3F9'
+                }
+            }
+        },
+        {
+            type: 'map',
+            map: mapName,
+            geoIndex: 0,
+            aspectScale: 0.75, //长宽比
+            showLegendSymbol: false, // 存在legend时显示
+            label: {
+                normal: {
+                    show: true
+                },
+                emphasis: {
+                    show: false,
+                    textStyle: {
+                        color: '#fff'
+                    }
+                }
+            },
+            roam: true,
+            itemStyle: {
+                normal: {
+                    areaColor: '#031525',
+                    borderColor: '#3B5077',
+                },
+                emphasis: {
+                    areaColor: '#2B91B7'
+                }
+            },
+            animation: false,
+            data: data
+        },
+        {
+            name: '点',
+            type: 'scatter',
+            coordinateSystem: 'geo',
+            symbol: 'pin', //气泡
+            symbolSize: function(val) {
+                var a = (maxSize4Pin - minSize4Pin) / (max - min);
+                var b = minSize4Pin - a * min;
+                b = maxSize4Pin - a * max;
+                return a * val[2] + b;
+            },
+            label: {
+                normal: {
+                    show: true,
+                    textStyle: {
+                        color: '#fff',
+                        fontSize: 9,
+                    }
+                }
+            },
+            itemStyle: {
+                normal: {
+                    color: '#F62157', //标志颜色
+                }
+            },
+            zlevel: 6,
+            data: convertData(data),
+        },
+        {
+            name: 'Top 5',
+            type: 'effectScatter',
+            coordinateSystem: 'geo',
+            data: convertData(data.sort(function(a, b) {
+                return b.value - a.value;
+            }).slice(0, 5)),
+            symbolSize: function(val) {
+                return val[2] / 10;
+            },
+            showEffectOn: 'render',
+            rippleEffect: {
+                brushType: 'stroke'
+            },
+            hoverAnimation: true,
+            label: {
+                normal: {
+                    formatter: '{b}',
+                    position: 'right',
+                    show: true
+                }
+            },
+            itemStyle: {
+                normal: {
+                    color: 'yellow',
+                    shadowBlur: 10,
+                    shadowColor: 'yellow'
+                }
+            },
+            zlevel: 1
+        },
+
+    ]
+};
+myChart.setOption(option);
+
+
+
+
+
+                });
+
+               };
+
+           function timeDown(limit) {
+               limit--;
+
+               if (limit < 0) {
+                   limit = 10;
+                   update();
+
+               }
+               $('#time').text(limit + '秒后刷新');
+               setTimeout(function() {
+                   timeDown(limit);
+               }, 1000)
+           }
+
+           $(document).ready(function() {
+               timeDown(10)
+        })
+
+
+
+
+</script>
+
+</body>
+</html>

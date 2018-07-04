@@ -1,0 +1,50 @@
+
+    body {margin:0;padding:15px 15px 0px 15px; font:12px "宋体", arial,sans-serif;}
+    div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,form,fieldset,input,textarea,blockquote,p{padding:0; margin:0;}
+    table,td,tr,th{font-size:12px;}
+    li{list-style-type:none;}
+    img{border:0;}
+    ol,ul {list-style:none;}
+    input{margin:0;padding:0}
+    input,img{line-height:normal}
+    em{font-style:normal;}
+    .clear{clear:both;}
+    a{color:#252525; text-decoration:none;}
+    a:visited{text-decoration:none;}
+    a:hover{color:#ff6600;text-decoration:underline;}
+    a:active{color:#252525;}
+    /*栏目导航*/
+	.maintitlebg {line-height: 30px;height: 30px;background: url(../imgs/maintoptitlebg.png) repeat-x;  color: #0060ae;  font-weight: bold;  font-size: 14px;  }
+    .maintitlebg span{float:right; margin-right:5px; color:#c3c3c3; font-size:12px; font-weight:normal}
+    .maintitlebg b{width:17px; height:20px; display:block; margin-left:5px;}
+    .title1icon,.title2icon,.title3icon,.title4icon,.title5icon{width:30px; height:30px; margin-right:5px;margin-left:5px; float:left}
+    .title1icon{background-position:0px 0px;}
+    .title2icon{background-position:0px -30px;}
+    .title3icon{background-position:0px -60px;}
+    .title4icon{background-position:0px -90px;}
+    .title5icon{background-position:0px -120px;}
+    /*列表*/
+    .titlebox{margin:auto; height:156px; margin-top:5px}
+    .titlebox li{border-bottom:1px dashed #e2e2e2;LINE-HEIGHT: 26px; HEIGHT: 26px;padding-left:12px; font-size:12px;}
+    .titlebox li:hover{}
+    .titlebox li span{float:right;color:#b7b7b7;font-size:12px;}
+    /*快捷菜单*/
+    .srortcut4box{padding:10px}
+    .srortcut4box li{text-align:center; width:25%; height:65px; float:left}
+    .srortcut4box img{margin-bottom:8px;}
+    /*右边外框*/
+    .rigbox{background:#eff4f7;border:1px solid #d5e4f0; border-top:0px; min-height:300px;}
+    /*日期*/
+    .databg{line-height:30px; height:30px; color:#0060ae; text-align:center;}
+    .databg em{ padding-left:5px; padding-right:5px; font-weight:bold;color:#ff0000; font-size:14px;}
+    .datetxt{height: 18px;line-height: 18px;border: 1px solid #c2d6e6;width: 90px;margin-left: 5px;}
+    /*名片*/
+    .cardbox{padding:10px;}
+    .cardbox img{float:left; width:90px; height:120px;}
+    .cardbox p{float:right; text-align:left; width:100%; line-height:24px;color:#5a5a5a;}
+    /*我的课表*/
+    .bookexcel{padding: 0 10px 0 10px;color:#5a5a5a;}
+    .bookexcel ul{border-bottom:1px solid #d5e4f0; padding-bottom:5px; padding-top:5px;}
+    .bookexcel li{line-height:18px;}
+    .bookexcel li strong{ color:#474747; font-weight:bold; padding-right:10px;}
+    /*预警图标*/

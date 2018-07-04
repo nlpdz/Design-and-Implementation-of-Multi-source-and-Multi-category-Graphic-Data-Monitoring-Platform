@@ -1,0 +1,122 @@
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/html">
+<head>
+	<meta charset="utf-8">
+	<!--“userinfo里面记录了当前登录者的所有信息”-->
+	<title>{{user_name}}</title>
+    <link href="/static/css/tabel.css" rel="stylesheet" type="text/css">
+	<!--内部引用CSS-->
+	<style type="text/css">
+	/* 一般情况下页面上的元素会有一个默认的外边距和内边距*/
+	*{
+		margin: 0;
+		padding: 0;
+	}
+		/*css语句结构： selector{样式1：值1；样式2：值2；...}
+			selector选择器，用于选中页面上的标签元素
+			选择器的分类：id(#id值，根据id值来选中)，标签（标签名），类别（.class属性值）
+		*/
+		#title{
+			width: 800px;
+			height: 50px;
+			/*background: green;*/
+			text-align: center;
+			/*margin是外边距，值有四种写法
+			一个值代表，四个外边距全部一样
+			两个值分别代表：上下，左右
+			三个值分别代表：上，左右，下
+			四个值分别代表：上，右，下，左
+			*/
+			margin: 10px auto;
+			line-height: 50px;
+			font-size: 30px;
+			color: red;
+		}
+
+		#info{
+            text-align: center;
+			height: 400px;
+			/*width: 500px;
+			background: greenyellow;*/
+{#			position: relative;/*让info成为其子元素的绝对定位的参照物*/#}
+
+		}
+		#info .headerimg{
+			width: 200px;
+			height: 200px;
+			border-radius: 80px;
+
+
+		}
+
+		.booksbox{
+			width: 80%;
+			height: 80px;
+			border: 1px purple solid;
+			margin: 40px auto;
+			/*border-radius: 5px;*/
+
+		}
+		.booksbox .bookname{
+			float: left;
+			margin: 25px 20px;
+			font-size: 20px;
+
+		}
+		.booksbox .time{
+			float: left;
+			margin: 30px;
+		}
+		.booksbox .writer{
+			float: left;
+			margin: 30px;
+		}
+		.booksbox .price{
+			float: left;
+			margin: 30px;
+		}
+		.booksbox .delete{
+			float: right;
+			margin: 30px 50px;
+
+		}
+		.booksbox .alter{
+			float: right;
+			margin: 30px 50px;
+		}
+
+	</style>
+	<!--内部引用前端脚本 -->
+	<script type="text/javascript">
+		function submitInfo(element){
+			var infoForm=document.getElementById('pubForm')
+			//根据不同的按钮点击提交到不同的网址
+			if (element.id=='alter') {
+				//说明此时是修改按钮提交的，跳转到修改页面
+				//alert(element.id)
+				infoForm.action="alterinfo"
+
+			}
+			//让表单提交
+			infoForm.submit()
+
+		}
+
+	</script>
+
+
+</head>
+<body>
+	<h2 id="title">欢迎&nbsp;&nbsp;{{user_name}}</h2>
+	<div id="info">
+		<img src="{{user_headerimg}}"	class="headerimg"></br>
+		简介：<p class="shopintroduct">{{user_shopintroduct}}</p>
+	</div>
+	<form method="post"	id="pubForm" style="text-align: center">
+		<input type="hidden" name="userid"	value="{{user_id}}">
+		<input type="hidden" name="flag"	value="index">
+		<input type="button" value="修改"	 id="alter" onclick="submitInfo(this)">
+	</form>
+</body>
+</html>

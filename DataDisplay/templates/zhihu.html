@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>知乎答主分析</title>
+   <script src="http://cdn.bootcss.com/jquery/1.10.2/jquery.min.js"></script>
+     <script src="http://echarts.baidu.com/dist/echarts.common.min.js"></script>
+    <script src="../static/js/FileSaver.min.js"></script>
+
+</head>
+
+<body>
+<div style="margin: 30px;">
+<form action="/books/zhihu" method="post">
+   <input type="submit" name="sent" value="start">  &nbsp;&nbsp;&nbsp;点击 start ,开始抓取各类知乎付费答主个人信息。
+
+
+</form>
+<form style="margin-top: 10px;" action="/books/ZhihuToStop" method="post">   {# 不能用/books/zhihu_to_stop 不然跳转到  /books/zhihu/ 了，路由不认识下划线 #}
+   <input type="submit" name="sent" value="stop">   &nbsp;&nbsp;&nbsp;点击 stop ,结束抓取。
+
+</form>
+
+</div>
+
+
+
+<h2 id="time"></h2>
+<div id="content"></div>
+ <div id="chart" style="left: 10%; width: 1200px;height: 920px;"></div>
+   <script type="text/javascript" language="javascript">
+
+
+       var myChart = echarts.init(document.getElementById('chart'));
+
+           function update() {
+               $.getJSON("/books/bbb/",function(data) {
+                   var anwser_number = data.number;
+                var price_count = data.count;
+                var ave = data.ave;
+
+
+// echarts图表代码处
+              option = {
+                tooltip : {
+                    trigger: 'axis',
+                    axisPointer : {            // 坐标轴指示器，坐标轴触发有效
+                        type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+                    }
+                },
+                legend: {
+                    data:['人数（*10人）','总价值(千元)','平均每人每个问题需支付（元）']
+                },
+                grid: {
+                    left: '3%',
+                    right: '4%',
+                    bottom: '3%',
+                    containLabel: true
+                },
+                xAxis : [
+                    {
+                        type : 'category',
+                        data : ['心理学','电影','游戏','音乐','美食']
+                    }
+                ],
+                yAxis : [
+                    {
+                        type : 'value'
+                    }
+                ],
+                series : [
+                    {
+                        name:'人数（*10人）',
+                        type:'bar',
+                        data:anwser_number
+                    },
+
+                    {
+                        name:'总价值(千元)',
+                        type:'bar',
+                        data:price_count
+                    },
+
+                    {
+                        name:'平均每人每个问题需支付（元）',
+                        type:'bar',
+                        data:ave,
+                        markLine : {
+                            lineStyle: {
+                                normal: {
+                                    type: 'dashed'
+                                }
+                            },
+                            data : [
+                                [{type : 'min'}, {type : 'max'}]
+                            ]
+                        }
+                    },
+
+
+                ]
+            };myChart.setOption(option);
+
+
+
+
+
+
+                });
+
+               };
+
+           function timeDown(limit) {
+               limit--;
+
+               if (limit < 0) {
+                   limit = 5;
+                   update();
+
+               }
+               $('#time').text(limit + '秒后刷新');
+               setTimeout(function() {
+                   timeDown(limit);
+               }, 1000)
+           }
+
+           $(document).ready(function() {
+               timeDown(5)
+        })
+
+
+
+
+
+
+
+
+
+
+
+</script>
+
+
+</body>
+</html>

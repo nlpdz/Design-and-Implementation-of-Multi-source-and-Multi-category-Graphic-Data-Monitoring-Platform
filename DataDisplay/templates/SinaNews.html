@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div style="float: left;">
+<form action="/books/SinaNews" method="post">
+    <h3>根据关键词抓取相关Sina新闻上的文章，并生成词云。</h3>
+    <h3>请输入关键词：</h3>
+   <input type="text" name="searchEvent"
+    {% if searchEvent != '' %}
+        value={{ searchEvent }}
+    {% endif %}
+    >
+   <input type="submit" name="sent" value="提交">
+
+
+</form>
+</div>
+</body>
+</html>

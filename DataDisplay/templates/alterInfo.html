@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+	
+	<meta charset="utf-8">
+	<title>修改资料</title>
+	<style type="text/css">
+		body{
+			background: url(/static/imgs/22600.jpg);
+		}
+		*{
+			margin: 0;
+			padding: 0;
+		}
+
+		.booksbox{
+			
+			/*height: 300px;*/
+			/*width: 300px;*/
+			/*background: red;*/
+			text-align: center;
+			margin: 10px auto;
+		}
+		.booksbox .shop{
+			width: 200px;
+			height: 30px;
+			/*background: lightblue;*/
+			margin: 10px auto;
+		}
+		.booksbox .shopin{
+			width: 200px;
+			height: 130px;
+			/*background: lightblue;*/
+			margin: 10px auto;
+
+		}
+		.booksbox .header{
+			width: 200px;
+			height: 30px;
+			/*background: lightblue;*/
+			margin: 10px auto;
+
+		}
+	</style>
+</head>
+<body>
+	<div><h1 style="text-align: center;height: 50px;margin: 20px auto;">修改资料</h1></div>
+	<br><br>
+	<div class="booksbox">
+	
+		<form method="post" enctype="multipart/form-data">
+			<h2>昵称：</h2><input type="text" name="username" value="{{userinfo.username}}" class="shop"><br><br>
+			<h2>自我简介：</h2><br>
+			<textarea  name="shopintroduct" class="shopin">{{userinfo.shopintroduct}}	</textarea><br><br>
+			<h2>头像：</h2><input type="file" name="headerimg" class="header" ><br><br>
+			<!--给当前页面一个flag-->
+			<input type="hidden" name="flag" value="alter">
+			<input type="hidden" name="userid" value="{{userinfo.id}}">
+			<div>
+				<input type="submit" value="确认修改" style="margin: 50px 50px;">
+			</div>
+
+		</form>
+
+
+
+
+	</div>
+	
+</body>
+</html>

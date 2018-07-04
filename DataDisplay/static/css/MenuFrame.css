@@ -1,0 +1,33 @@
+body {margin:0;padding:0;     font: 15px "隶书", sans-serif;background:url("../imgs/leftbg.gif");}
+div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,form,fieldset,input,textarea,blockquote,p{padding:0; margin:0;}
+table,td,tr,th{font-size:12px;}
+li{list-style-type:none;}
+img{vertical-align:top;border:0;}
+ol,ul {list-style:none;}
+input{margin:0;padding:0}
+input,img{line-height:normal}
+em{font-style:normal;}
+.clear{clear:both;}
+a{color:#333333; text-decoration:none;}
+a:visited{text-decoration:none;}
+a:hover{color:#ff6600;text-decoration:underline;}
+a:active{color:#333333;}
+/*左边树形菜单*/
+.leftTbg{background: url("../imgs/leftTbg.png");width:144px;height:30px;line-height:30px;color:#fff; padding-left:15px;font-weight:bold}
+.leftTbg a{color:#fff}
+.tree{width:159px;overflow:hidden}
+.tree dt{line-height:28px;padding-left:15px;cursor:pointer;color:#4e9ad2;background:url(../imgs/leftPlusMinus.png) no-repeat 0px -56px;}
+.tree dt a{color:#4e9ad2;}
+.tree dt:hover{display:block;background:url(../imgs/leftPlusMinus.png) no-repeat -159px -56px;font-weight:bold;color:#4e9ad2;}
+.tree dt.close{background:url(../imgs/leftPlusMinus.png) no-repeat 0px 0px;color:#4e9ad2}
+.tree dt.close a{color:#4e9ad2}
+.tree dt.close a:hover{color:#4e9ad2}
+.tree dt.open{background:url(../imgs/leftPlusMinus.png) no-repeat 0px -28px;color:#4e9ad2;font-weight:bold}
+.tree dt.open a{color:#4e9ad2;font-weight:bold}
+.tree dt.open a:hover{background:url(../imgs/leftPlusMinus.png) no-repeat -159px 0px;color:#4e9ad2;font-weight:bold;}
+.tree dd {border-bottom:1px solid #dedede;}
+.tree dd .list li{background-color:#fff;height:24px;line-height:24px;color:#3c3c3c;display:block;}
+.tree dd .list li a{color:#3c3c3c;height:24px;line-height:24px;display:block;}
+.tree dd .list li a:hover{background:#4e9ad2;color:#fff;text-decoration:none;height:24px;line-height:24px;display:block;}
+.tree dd .list li a em{width:22px;height:24px;background: url(../imgs/lefticon.gif) no-repeat 15px 8px;display:inline;float: left;margin-right:1px;}
+.tree dd .list li .cursor{background:#4e9ad2;color:#fff;}

@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+<head>
+	
+	<meta charset="utf-8">
+	<title>用户注册</title>
+	<style type="text/css">
+		body{
+			background: url( /static/imgs/22600.jpg);
+		}
+		*{	margin: 0;
+			padding: 0;
+		}
+		#warp{
+			position: relative;
+			background: #ffffff;
+		}
+		#head{
+			text-align: center;
+			/*background-color: #167c80;*/
+			width: 100%;
+			height: 15%;
+			position: absolute;
+			top: 30px;
+			font-size: 30px;
+			color: white;
+		}	
+		#register{
+			text-align: center;
+			position: relative;
+			top: 105px;
+			padding: 0;
+			margin: 0;
+		}
+		
+	</style>
+
+	<script type="text/javascript">
+		window.onload=function(){
+			//【1.验证密码的安全等级以及一致性】
+			//获取和确认密码框
+			var passTxt=document.querySelector("[name=password]")
+			var repass=document.getElementById('repass')
+			//声明一个变量，用于记录表单是否允许提交
+			var isSubmit=false
+			//声明一个变量用于记录用户名是否可用
+			var isUserAvailable=false
+
+			//给密码框绑定失去焦点事件
+			passTxt.onblur=function(e){
+				//获取密码框后面的提示语
+				var verfiypass=document.getElementById('verfiypass')
+				isSubmit=true
+				if (repass.value=='') {
+					isSubmit=false
+					//alert('请填写确认密码')
+				} 
+				 if (this.value=='') {
+					verfiypass.innerHTML="当前密码为空哦！"
+					verfiypass.style.color='red'
+					//密码为空不能提交
+					isSubmit=false
+
+				}else if(this.value.length<=3){
+					verfiypass.innerHTML="当前密码等级为：弱！"
+					verfiypass.style.color='red'
+					
+					
+				}else if(this.value.length<=6){
+					verfiypass.innerHTML="当前密码等级为：中！"
+					verfiypass.style.color='orange'
+					
+				}else{//两次密码不一致不能提交
+					verfiypass.innerHTML="当前密码等级为：强！"
+					verfiypass.style.color='green'
+
+			}
+		}
+		//验证两次密码是否一致
+		repass.onblur=function(e){
+			//获取确认密码的提示语
+			var verfiyrepass=document.getElementById('verfiyrepass')
+
+			if (passTxt.value=='') {
+				//判断密码是否为空
+				isSubmit=false
+			}else if (repass.value==passTxt.value) {
+				//两次密码一致
+				verfiyrepass.innerHTML='√'
+				verfiyrepass.style.color='green'
+				isSubmit=true
+
+			} else {
+				//两次密码不一致
+				verfiyrepass.innerHTML='两次密码不一致'
+				verfiyrepass.style.color='red'
+				//不允许提交
+				isSubmit=false
+			}
+		}
+
+		//2.【验证用户名是否可用】
+		var userTxt=document.querySelector('[name=username]')
+		var verfiyuser=document.getElementById('verfiyuser')
+
+		userTxt.onblur=function(e){
+			var	data="username="+userTxt.value
+			var xhr=new XMLHttpRequest()
+			xhr.onreadystatechange=function(event){
+				if(xhr.readyState==4){
+					if (xhr.status==200) {
+						if (xhr.responseText) {
+							//说明该用户名已经存在，不可用
+							isUserAvailable=false 
+							verfiyuser.innerHTML='当前用户名已被占用'
+							verfiyuser.style.color='red'
+						} else {
+							//说明该用户名不存在，可用
+							isUserAvailable=true 
+							verfiyuser.innerHTML='该用户名可用'
+							verfiyuser.style.color='green'
+						}
+					} 
+				}
+			}
+			xhr.open("post","ajaxhaddle",true)
+			xhr.setRequestHeader('Content-type','application/x-www-form-urlencoded')
+			xhr.send(data)
+		}
+
+		//3.【处理提交按钮的提交事件】
+		document.querySelector('[type=submit]').onclick=function(e){
+			if (!isSubmit) {
+				//阻止提交
+				e.preventDefault()
+			}
+			if(!isUserAvailable){
+				e.preventDefault()
+			}
+		}
+	}
+	</script>
+
+</head>
+<body bgcolor="#f4f3de">
+<div id="wrap">
+
+	<div id="register">
+		<form method="post">
+			账&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 户：<input type="text" name="username" placeholder="请输入用户名"><span id="verfiyuser"></span><br><br>
+			密&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;码：<input type="password" name="password" placeholder="请输入密码"><span id='verfiypass'></span><br><br>
+			确认密码：<input type="password" placeholder="请再次输入密码" id="repass"><span id='verfiyrepass'></span><br><br>
+
+			个人简介：<br><textarea name="shopintroduct" placeholder="请简要介绍自己" style="width: 200px; height: 195px;"></textarea><br><br>
+
+			<input type="submit" value="submit" style="margin: 30px 30px;">
+			<input type="reset" value="reset" style="margin: 30px 30px;">
+		</form> 
+	</div>
+	
+</div>
+</body>
+</html>

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>网易新闻</title>
+   <script src="http://cdn.bootcss.com/jquery/1.10.2/jquery.min.js"></script>
+     <script src="http://echarts.baidu.com/dist/echarts.common.min.js"></script>
+    <script src="../static/js/FileSaver.min.js"></script>
+
+</head>
+
+<body>
+<div style="margin: 30px;">
+<form action="/books/WangyiNews" method="post">
+   <input type="submit" name="sent" value="start">  &nbsp;&nbsp;&nbsp;点击 start ,开始抓取网易图片新闻，并播放最新抓取的图册信息。
+
+
+</form>
+<form style="margin-top: 10px;" action="/books/wangyiNews_to_stop" method="post">
+   <input type="submit" name="sent" value="stop">   &nbsp;&nbsp;&nbsp;点击 stop ,结束抓取。
+
+</form>
+
+</div>
+
+
+<h2 id="time"></h2>
+<div id="content"></div>
+
+   <script type="text/javascript" language="javascript">
+           function update() {
+               $.getJSON("/books/aaa/",function(data) {
+                   //data为传过来的图片和描述
+
+                   $('#img img').attr('src',data.imgsrc)
+                   $('#img_note').text(data.imgnote)
+                   $('#img_id').text(data.imgid)
+                   $('#img_title').text(data.imgtitle)
+{#                   $('#img_overview').text(data.imgoverview)#}
+
+
+                });
+
+               };
+
+           function timeDown(limit) {
+               limit--;
+
+               if (limit < 0) {
+                   limit = 5;
+                   update();
+
+               }
+               $('#time').text(limit + '秒后刷新');
+               setTimeout(function() {
+                   timeDown(limit);
+               }, 1000)
+           }
+
+           $(document).ready(function() {
+               timeDown(5)
+        })
+
+</script>
+
+<div id="img" align="center" style="text-align: center; width: auto;height: auto;">
+    <img src="" alt="" style="text-align: center; height: 600px;width: 500px;"><br>
+    正在抓取第<h3 id="img_id" style="display: inline;text-align: center"> </h3>个图册<br>
+    图册标题：<h3 id="img_title" style="display: inline;text-align: center"></h3><br>
+    图片描述：<h3 id="img_note" style="display: inline;text-align: center"></h3>
+</div>
+
+</body>
+</html>
